@@ -2,29 +2,58 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { files } from './files';
+
+const { page, components } = files('index');
+const fileTypes: Array<string> = [ 'js', 'wxss', 'wxml', 'json' ];
+// handler for command: wx command
+function wxCommandHander(type: string,e: vscode.Uri) {
+	const stat = fs.statSync(e.fsPath);
+	if (stat.isDirectory()) {
+		try {
+			fileTypes.map(async(i: string) => {
+				const data =  new Uint8Array(Buffer.from( type === 'page' ? page[i] : components[i]));
+				fs.writeFileSync(`${e.path}/index.${i}`, data);
+			});
+		} catch (error) {
+			vscode.window.showErrorMessage('create page files failed');
+		}
+	} else {
+		vscode.window.showErrorMessage('please choose folder');
+	}
+}
+
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "wx-command" is now active!');
-
-	
+	console.log('Congratulations, your extension "wx" is now active!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.wxCommand', async(e: vscode.Uri) => {
+	let disposable = vscode.commands.registerCommand('extension.wxPage', async (e: vscode.Uri) => {
 		// The code you place here will be executed every time your command is executed
-		let config = vscode.workspace.getConfiguration('wx command');
-		const stat = fs.statSync(e.fsPath);
-		console.log(stat.isDirectory());
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello Dylan!');
+		wxCommandHander('page', e);
+			// Display a message box to the user
+		vscode.window.showInformationMessage('create page!');
+		// console.log('page');
+		
+	
 	});
 
 	context.subscriptions.push(disposable);
+	disposable = vscode.commands.registerCommand('extension.wxComponents', (e: vscode.Uri) => {
+		// The code you place here will be executed every time your command is executed
+		wxCommandHander('components', e);
+		// Display a message box to the user
+		vscode.window.showInformationMessage('create components');
+	});
+	context.subscriptions.push(disposable);
+
 }
 
 // this method is called when your extension is deactivated
