@@ -10,16 +10,23 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.wx-command"
+		"onCommand:extension.wxCommand"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.wx-command",
+				"command": "extension.wxCommand",
 				"title": "wx command"
 			}
-		]
+		],
+		"menus": {
+      "explorer/context": [
+        {
+          "command": "extension.wxCommand"
+        }
+      ]
+    }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

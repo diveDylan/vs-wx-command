@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-
+import * as fs from 'fs';
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -10,16 +10,18 @@ export function activate(context: vscode.ExtensionContext) {
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "wx-command" is now active!');
 
-	let config = vscode.workspace.getConfiguration('view-in-d');
+	
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('extension.wx-command', () => {
+	let disposable = vscode.commands.registerCommand('extension.wxCommand', async(e: vscode.Uri) => {
 		// The code you place here will be executed every time your command is executed
-
+		let config = vscode.workspace.getConfiguration('wx command');
+		const stat = fs.statSync(e.fsPath);
+		console.log(stat.isDirectory());
 		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
+		vscode.window.showInformationMessage('Hello Dylan!');
 	});
 
 	context.subscriptions.push(disposable);
