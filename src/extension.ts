@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as path from 'path';
 import { files } from './files';
 
 const { page, components } = files('index');
@@ -9,11 +10,15 @@ const fileTypes: Array<string> = [ 'js', 'wxss', 'wxml', 'json' ];
 // handler for command: wx command
 function wxCommandHander(type: string,e: vscode.Uri) {
 	const stat = fs.statSync(e.fsPath);
+	// fixed bug in windows
+	// https://github.com/diveDylan/vs-wx-command/issues/1
+	const dir = path.normalize(e.fsPath);
+	
 	if (stat.isDirectory()) {
 		try {
 			fileTypes.map(async(i: string) => {
 				const data =  new Uint8Array(Buffer.from( type === 'page' ? page[i] : components[i]));
-				fs.writeFileSync(`${e.path}/index.${i}`, data);
+				fs.writeFileSync(`${dir}/index.${i}`, data);
 			});
 		} catch (error) {
 			vscode.window.showErrorMessage('create page files failed');
