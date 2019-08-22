@@ -8,4 +8,4 @@ This is a extension for you to create wechat miniprogram files
 
 `wx components` ---- create components files
 
-[wx-command]("./images/wx-command.gif")
+<img src="/images/wx-command.gif"/>
