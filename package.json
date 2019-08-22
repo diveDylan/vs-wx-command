@@ -2,7 +2,7 @@
 	"name": "wx-command",
 	"displayName": "wx-command",
 	"description": "微信小程序文件助手",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.36.0"
 	},

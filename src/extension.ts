@@ -20,11 +20,12 @@ function wxCommandHander(type: string,e: vscode.Uri) {
 				const data =  new Uint8Array(Buffer.from( type === 'page' ? page[i] : components[i]));
 				fs.writeFileSync(`${dir}/index.${i}`, data);
 			});
+			vscode.window.showInformationMessage(`create ${type} success!`);
 		} catch (error) {
 			vscode.window.showErrorMessage('create page files failed');
 		}
 	} else {
-		vscode.window.showErrorMessage('please choose folder');
+		vscode.window.showErrorMessage('please choose a folder');
 	}
 }
 
@@ -44,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 		wxCommandHander('page', e);
 			// Display a message box to the user
-		vscode.window.showInformationMessage('create page!');
+		
 		// console.log('page');
 		
 	
@@ -55,7 +56,6 @@ export function activate(context: vscode.ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 		wxCommandHander('components', e);
 		// Display a message box to the user
-		vscode.window.showInformationMessage('create components');
 	});
 	context.subscriptions.push(disposable);
 
