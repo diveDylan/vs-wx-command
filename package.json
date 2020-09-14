@@ -10,28 +10,21 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.wxPage",
-		"onCommand:extension.wxComponents"
+		"onCommand:extension.useList"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.wxPage",
-				"title": "wx page"
-			},
-			{
-				"command": "extension.wxComponents",
-				"title": "wx components"
+				"command": "extension.useList",
+				"title": "useList"
 			}
+			
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"command": "extension.wxPage"
-				},
-				{
-					"command": "extension.wxComponents"
+					"command": "extension.useList"
 				}
 			]
 		}
