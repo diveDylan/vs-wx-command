@@ -121,9 +121,6 @@ Component({
 
 `,
   json: `
-/**
-* ${name}
-* /
 {
   "component": true,
   "usingComponents": {}
